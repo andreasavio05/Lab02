@@ -1,11 +1,40 @@
 def carica_da_file(file_path):
     """Carica i libri dal file"""
     # TODO
+    biblioteca = list()
+    with open(file_path, "r", encoding="utf-8") as file:
+        sezioni = file.readline()
+        for riga in file:
+            campi = riga.rstrip().split(',')
+            biblioteca.append({'nome' : campi[0],
+                               'autore' : campi[1],
+                               'anno' : campi[2],
+                               'pagine' : campi[3],
+                               'sezione' : campi[4],})
+    return biblioteca
 
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
     """Aggiunge un libro nella biblioteca"""
     # TODO
+    from csv import writer
+    if titolo in biblioteca:
+        libro = None
+    else:
+        libro = True
+        if libro:
+            biblioteca.append({'nome' : titolo,
+                               'autore' : autore,
+                               'anno' : anno,
+                               'pagine' : pagine,
+                               'sezione' : sezione,})
+            with open(file_path, 'a', encoding="utf-8") as file:
+                csv_writer = writer(file)
+                csv_writer.writerow([titolo,autore,anno,pagine,sezione])
+
+    return libro
+
+
 
 
 def cerca_libro(biblioteca, titolo):
